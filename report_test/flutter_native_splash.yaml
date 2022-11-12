@@ -1,0 +1,7 @@
+flutter_native_splash:
+  color: "#F6CB12"
+  color_dart : "#F6CB12"
+  image: assets/images/report_splash.png
+  fullscreen: true
+  android: true
+  ios: true
