@@ -20,9 +20,9 @@ class _Note_DemoState extends State<Note_Demo> {
   final String colName = "FirstDemo";
 
   // 필드명
-  final String fnName = "name";
-  final String fnDescription = "description";
-  final String fnDatetime = "datetime";
+  final String fnName = "길거리 음식 이름";
+  final String fnDescription = "간단한 위치";
+  final String fnDatetime = "날짜";
 
   TextEditingController _newNameCon = TextEditingController();
   TextEditingController _newDescCon = TextEditingController();
@@ -38,7 +38,7 @@ class _Note_DemoState extends State<Note_Demo> {
           Container(
             height: 500,
             child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
+              stream: Firestore.instance
                   .collection(colName)
                   .orderBy(fnDatetime, descending: true)
                   .snapshots(),
@@ -118,7 +118,7 @@ class _Note_DemoState extends State<Note_Demo> {
 
   // 문서 생성 (Create)
   void createDoc(String name, String description) {
-    FirebaseFirestore.instance.collection(colName).add({
+    Firestore.instance.collection(colName).add({
       fnName: name,
       fnDescription: description,
       fnDatetime: Timestamp.now(),
@@ -127,7 +127,7 @@ class _Note_DemoState extends State<Note_Demo> {
 
   // 문서 조회 (Read)
   void showDocument(String documentID) {
-    FirebaseFirestore.instance
+    Firestore.instance
         .collection(colName)
         .document(documentID)
         .get()
@@ -138,7 +138,7 @@ class _Note_DemoState extends State<Note_Demo> {
 
   // 문서 갱신 (Update)
   void updateDoc(String docID, String name, String description) {
-    FirebaseFirestore.instance.collection(colName).document(docID).updateData({
+    Firestore.instance.collection(colName).document(docID).updateData({
       fnName: name,
       fnDescription: description,
     });
@@ -146,7 +146,7 @@ class _Note_DemoState extends State<Note_Demo> {
 
   // 문서 삭제 (Delete)
   void deleteDoc(String docID) {
-    FirebaseFirestore.instance.collection(colName).document(docID).delete();
+    Firestore.instance.collection(colName).document(docID).delete();
   }
 
   void showCreateDocDialog() {
@@ -155,18 +155,18 @@ class _Note_DemoState extends State<Note_Demo> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Create New Document"),
+          title: Text("대전 광역시의 길거리 음식 위치를 등록해주세요."),
           content: Container(
             height: 200,
             child: Column(
               children: <Widget>[
                 TextField(
                   autofocus: true,
-                  decoration: InputDecoration(labelText: "Name"),
+                  decoration: InputDecoration(labelText: "길거리 음식 이름"),
                   controller: _newNameCon,
                 ),
                 TextField(
-                  decoration: InputDecoration(labelText: "Description"),
+                  decoration: InputDecoration(labelText: "간단한 위치"),
                   controller: _newDescCon,
                 )
               ],
@@ -174,7 +174,7 @@ class _Note_DemoState extends State<Note_Demo> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text("Cancel"),
+              child: Text("취소"),
               onPressed: () {
                 _newNameCon.clear();
                 _newDescCon.clear();
@@ -182,7 +182,7 @@ class _Note_DemoState extends State<Note_Demo> {
               },
             ),
             FlatButton(
-              child: Text("Create"),
+              child: Text("등록"),
               onPressed: () {
                 if (_newDescCon.text.isNotEmpty &&
                     _newNameCon.text.isNotEmpty) {
@@ -232,11 +232,11 @@ class _Note_DemoState extends State<Note_Demo> {
             child: Column(
               children: <Widget>[
                 TextField(
-                  decoration: InputDecoration(labelText: "Name"),
+                  decoration: InputDecoration(labelText: "길거리 음식 이름"),
                   controller: _undNameCon,
                 ),
                 TextField(
-                  decoration: InputDecoration(labelText: "Description"),
+                  decoration: InputDecoration(labelText: "간단한 위치"),
                   controller: _undDescCon,
                 )
               ],
@@ -244,7 +244,7 @@ class _Note_DemoState extends State<Note_Demo> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text("Cancel"),
+              child: Text("취소"),
               onPressed: () {
                 _undNameCon.clear();
                 _undDescCon.clear();
@@ -252,7 +252,7 @@ class _Note_DemoState extends State<Note_Demo> {
               },
             ),
             FlatButton(
-              child: Text("Update"),
+              child: Text("변경"),
               onPressed: () {
                 if (_undNameCon.text.isNotEmpty &&
                     _undDescCon.text.isNotEmpty) {
@@ -262,7 +262,7 @@ class _Note_DemoState extends State<Note_Demo> {
               },
             ),
             FlatButton(
-              child: Text("Delete"),
+              child: Text("삭제"),
               onPressed: () {
                 deleteDoc(doc.documentID);
                 Navigator.pop(context);

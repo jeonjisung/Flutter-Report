@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:report_test/report_login/sample_screen.dart';
+import 'package:report_test/note/note_demo.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,7 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Sample(),
+      home: Note_Demo(),
+      // home: Sample(),
     );
   }
 }
